@@ -1,0 +1,5 @@
+export const BASE_URL = ''
+export const USERS_URL = '/api/users'
+export const FLIGHTS_URL = '/api/flights'
+export const BOOKINGS_URL = '/api/bookings'
+export const PAYPAL_URL = '/api/config/paypal'
