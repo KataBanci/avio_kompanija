@@ -36,6 +36,17 @@ const getFlightDate = (date) => {
   return date.slice(0, 10)
 }
 
+const formatDateInputValue = (date) => {
+  const timezoneOffset = date.getTimezoneOffset() * 60000
+  return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 10)
+}
+
+const addDays = (date, days) => {
+  const nextDate = new Date(date)
+  nextDate.setDate(nextDate.getDate() + days)
+  return nextDate
+}
+
 const FlightsScreen = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -52,8 +63,12 @@ const FlightsScreen = () => {
   const [to, setTo] = useState(destinationFromUrl)
 
   const [tripType, setTripType] = useState('round')
-  const [departure, setDeparture] = useState('2026-04-20')
-  const [returnDate, setReturnDate] = useState('2026-04-27')
+  const [departure, setDeparture] = useState(() =>
+    formatDateInputValue(new Date())
+  )
+  const [returnDate, setReturnDate] = useState(() =>
+    formatDateInputValue(addDays(new Date(), 7))
+  )
   const [passengers, setPassengers] = useState('1 Passenger')
 
   const [showResults, setShowResults] = useState(false)
@@ -105,12 +120,24 @@ const FlightsScreen = () => {
     setShowSeats(true)
   }
 
-  const searchedFlights = flights.filter(
-    (flight) =>
-      flight.from.toLowerCase() === from.toLowerCase() &&
-      flight.to.toLowerCase() === to.toLowerCase() &&
-      getFlightDate(flight.departureDate) === departure
-  )
+  const searchedFlights = flights
+    .filter(
+      (flight) =>
+        flight.from.toLowerCase() === from.toLowerCase() &&
+        flight.to.toLowerCase() === to.toLowerCase()
+    )
+    .sort((firstFlight, secondFlight) => {
+      const firstFlightMatchesDate =
+        getFlightDate(firstFlight.departureDate) === departure
+      const secondFlightMatchesDate =
+        getFlightDate(secondFlight.departureDate) === departure
+
+      if (firstFlightMatchesDate === secondFlightMatchesDate) {
+        return 0
+      }
+
+      return firstFlightMatchesDate ? -1 : 1
+    })
 
   if (showSeats) {
     return (

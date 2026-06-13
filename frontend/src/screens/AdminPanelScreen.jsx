@@ -16,20 +16,36 @@ import {
 import { useCreateFlightMutation } from '../slices/FlightApiSlice'
 
 const bookingStatuses = ['pending', 'confirmed', 'completed', 'cancelled']
-const initialFlightForm = {
-  airline: 'Sky Serbia',
-  flightNumber: '',
-  from: '',
-  to: '',
-  departureDate: '',
-  returnDate: '',
-  departureTime: '',
-  arrivalTime: '',
-  travelClass: 'Economy',
-  price: '',
-  countInStock: '',
-  image: '/images/plane.jpg',
-  description: '',
+
+const formatDateInputValue = (date) => {
+  const timezoneOffset = date.getTimezoneOffset() * 60000
+  return new Date(date.getTime() - timezoneOffset).toISOString().slice(0, 10)
+}
+
+const addDays = (date, days) => {
+  const nextDate = new Date(date)
+  nextDate.setDate(nextDate.getDate() + days)
+  return nextDate
+}
+
+const getInitialFlightForm = () => {
+  const today = new Date()
+
+  return {
+    airline: 'Sky Serbia',
+    flightNumber: '',
+    from: '',
+    to: '',
+    departureDate: formatDateInputValue(today),
+    returnDate: formatDateInputValue(addDays(today, 7)),
+    departureTime: '',
+    arrivalTime: '',
+    travelClass: 'Economy',
+    price: '',
+    countInStock: '',
+    image: '/images/plane.jpg',
+    description: '',
+  }
 }
 
 const AdminPanelScreen = ({ embedded = false }) => {
@@ -39,7 +55,7 @@ const AdminPanelScreen = ({ embedded = false }) => {
   const [createFlight, { isLoading: isCreatingFlight }] = useCreateFlightMutation()
   const [actionError, setActionError] = useState('')
   const [flightSuccess, setFlightSuccess] = useState('')
-  const [flightForm, setFlightForm] = useState(initialFlightForm)
+  const [flightForm, setFlightForm] = useState(getInitialFlightForm)
 
   const bookingStats = useMemo(() => {
     const activeBookings = bookings.filter(
@@ -105,7 +121,7 @@ const AdminPanelScreen = ({ embedded = false }) => {
         countInStock: Number(flightForm.countInStock),
       }).unwrap()
 
-      setFlightForm(initialFlightForm)
+      setFlightForm(getInitialFlightForm())
       setFlightSuccess('Flight has been added successfully.')
     } catch (error) {
       setActionError(error?.data?.message || 'Flight could not be added.')

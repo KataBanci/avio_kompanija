@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.f9eabf7b.css",
-    "main.js": "/static/js/main.b30ddcf7.js",
+    "main.js": "/static/js/main.a3030e78.js",
     "static/media/acc.jpg": "/static/media/acc.6b68133e2f2d29b30183.jpg",
     "static/media/plane-hero.jpg": "/static/media/plane-hero.7bec13779eca3f938b7c.jpg",
     "static/media/singin.jpg": "/static/media/singin.f53dfeeb3d00eb848fef.jpg",
     "index.html": "/index.html",
     "main.f9eabf7b.css.map": "/static/css/main.f9eabf7b.css.map",
-    "main.b30ddcf7.js.map": "/static/js/main.b30ddcf7.js.map"
+    "main.a3030e78.js.map": "/static/js/main.a3030e78.js.map"
   },
   "entrypoints": [
     "static/css/main.f9eabf7b.css",
-    "static/js/main.b30ddcf7.js"
+    "static/js/main.a3030e78.js"
   ]
 }

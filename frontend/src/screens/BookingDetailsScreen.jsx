@@ -38,7 +38,19 @@ const BookingDetailsScreen = () => {
           <p><strong>Departure:</strong> {booking.flight?.departureTime}</p>
           <p><strong>Arrival:</strong> {booking.flight?.arrivalTime}</p>
           <p><strong>Class:</strong> {booking.travelClass}</p>
-          <p><strong>Seats:</strong> {booking.seats?.join(', ') || '-'}</p>
+          <p><strong>Seats:</strong> {booking.seats?.join(', ') || '-'}</p>AirVista
+          AirVista
+          Home
+          Flights
+          Destinations
+          About Us
+          Contact
+          Kata Banci
+          ‹ Back to seat selection
+          Payment
+          Complete your booking
+          
+          
           <p><strong>Payment:</strong> {booking.paymentMethod || 'Unknown'}</p>
           <p><strong>Status:</strong> {booking.status}</p>
 
